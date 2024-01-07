@@ -7,6 +7,11 @@ services:
       POSTGRES_DB: keycloak
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    volumes:
+      - type: volume
+        source: keycloak-database
+        target: /var/lib/postgresql/data
+
   # keycloak:
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
@@ -26,3 +31,6 @@ services:
       - start-dev
     ports:
       - 8080:8080
+
+volumes:
+  keycloak-database:
