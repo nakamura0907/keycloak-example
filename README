@@ -1,0 +1,40 @@
+# Keycloak Example
+
+## OpenID Connect Endpoints
+
+### Authorization Endpoint
+
+```
+# Browser Access
+http://localhost:8080/realms/<realm>/protocol/openid-connect/auth?response_type=code&client_id=<client_id>&redirect_uri=<redirect_uri>&scope=openid
+```
+
+### Token Endpoint
+
+```bash
+$ curl -X POST \
+    http://localhost:8080/realms/<realm>/protocol/openid-connect/token \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -d 'grant_type=authorization_code&client_id=<client_id>&code=<code>&redirect_uri=<redirect_uri>'
+
+$ curl -X POST\
+    http://localhost:8080/realms/<realm>/protocol/openid-connect/token \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -d 'grant_type=refresh_token&client_id=<client_id>&refresh_token=<refresh_token>'
+```
+
+### UserInfo Endpoint
+
+```bash
+$ curl http://localhost:8080/realms/<realm>/protocol/openid-connect/userinfo \
+    -H `Authorization: Bearer <access_token>`
+```
+
+### Token Introspection Endpoint
+
+```bash
+$ curl -X POST \
+    http://localhost:8080/realms/<realm>/protocol/openid-connect/token/introspect \
+    -H 'Content-Type: application/x-www-form-urlencoded' \
+    -d 'client_id=<client_id>&client_secret=<client_secret>&token=<access_token>&token_type_hint=access_token'
+```
